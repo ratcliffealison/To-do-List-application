@@ -60,12 +60,11 @@ let todoList = {
   },
 };
 
-let displayTodosButton = document.querySelector("#display-todos");
-displayTodosButton.addEventListener("click", function () {
-  todoList.displayTodos();
-});
-
-let toggleAllBUtton = document.querySelector("#toggle-all");
-toggleAllBUtton.addEventListener("click", function () {
-  todoList.toggleAll();
-});
+var handlers = {
+  displayTodos: function () {
+    todoList.displayTodos();
+  },
+  toggleAll: function () {
+    todoList.toggleAll();
+  },
+};
