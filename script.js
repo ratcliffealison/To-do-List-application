@@ -62,12 +62,8 @@ var handlers = {
     view.displayTodos();
   },
 
-  deleteTodo: function () {
-    var deleteTodoPositionInput = document.getElementById(
-      "delete-todo-position-input"
-    );
-    todoList.deleteTodo(deleteTodoPositionInput.valueAsNumber);
-    deleteTodoPositionInput.value = "";
+  deleteTodo: function (position) {
+    todoList.deleteTodo(position);
     view.displayTodos();
   },
   toggleCompleted: function () {
@@ -99,9 +95,29 @@ var view = {
       } else {
         todoTextWithCompletion = `☐ ${todo.todoText}`;
       }
-
+      todoLi.id = i;
       todoLi.textContent = todoTextWithCompletion;
+      todoLi.appendChild(this.createDeleteButton());
       todosUl.appendChild(todoLi);
     }
   },
+  createDeleteButton: function () {
+    var deleteButton = document.createElement("button");
+    deleteButton.textContent = "❌";
+    deleteButton.className = "delete-button";
+
+    return deleteButton;
+  },
+  setUpEventListeners: function () {
+    var todosUl = document.querySelector("ul");
+
+    todosUl.addEventListener("click", function (event) {
+      var elementClicked = event.target;
+
+      if (elementClicked.className === "delete-button") {
+        handlers.deleteTodo(parseInt(elementClicked.parentNode.id));
+      }
+    });
+  },
 };
+view.setUpEventListeners();
